@@ -1,27 +1,27 @@
 import { NodeEnvironment } from "../enum";
 import { ConfigurationBase } from "./ConfigurationBase";
-import { IConfigurationDataBase, IConfigurationOptions } from "../typing";
+import { DefaultConfiguration, ConfigurationOptions } from "../typing";
 
-interface IMockConfiguration extends IConfigurationDataBase {
-  SERVER_PORT: number;
-  HOST: string;
-  PRIO: string;
+interface TestConfiguration extends DefaultConfiguration {
+  SERVER_PORT: number | null;
+  HOST: string | null;
+  PRIO: string | null;
 }
 
-class MockConfig extends ConfigurationBase<IMockConfiguration> {
-  constructor(options: IConfigurationOptions<IMockConfiguration>) {
+class TestConfig extends ConfigurationBase<TestConfiguration> {
+  constructor(options: ConfigurationOptions<TestConfiguration>) {
     super(options);
   }
 }
 
 describe("Configuration", () => {
-  let config: MockConfig;
+  let config: TestConfig;
 
-  let environmentConfig: IMockConfiguration;
-  let productionConfig: IMockConfiguration;
-  let stagingConfig: IMockConfiguration;
-  let developmentConfig: IMockConfiguration;
-  let testConfig: IMockConfiguration;
+  let environmentConfig: TestConfiguration;
+  let productionConfig: TestConfiguration;
+  let stagingConfig: TestConfiguration;
+  let developmentConfig: TestConfiguration;
+  let testConfig: TestConfiguration;
 
   beforeAll(() => {
     environmentConfig = {
@@ -54,7 +54,7 @@ describe("Configuration", () => {
       HOST: "https://test.lindorm.io/",
       PRIO: "ignored",
     };
-    config = new MockConfig({
+    config = new TestConfig({
       environmentConfig,
       productionConfig,
       stagingConfig,

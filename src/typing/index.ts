@@ -1,17 +1,17 @@
-export interface IConfigurationDataBase {
-  NODE_ENVIRONMENT: string;
+export interface DefaultConfiguration {
+  NODE_ENVIRONMENT: string | null;
 }
 
-export interface IConfigurationOptions<IConfigurationData extends IConfigurationDataBase> {
-  productionConfig: IConfigurationData;
-  stagingConfig: IConfigurationData;
-  developmentConfig: IConfigurationData;
+export interface ConfigurationOptions<Configuration extends DefaultConfiguration> {
+  productionConfig: Configuration;
+  stagingConfig: Configuration;
+  developmentConfig: Configuration;
 
-  environmentConfig: IConfigurationData;
-  testConfig: IConfigurationData;
+  environmentConfig: Configuration;
+  testConfig: Configuration;
 }
 
-export interface IEnvironmentObjects {
+export interface EnvironmentRecord {
   production: Record<string, any>;
   staging: Record<string, any>;
   development: Record<string, any>;

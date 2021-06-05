@@ -1,7 +1,7 @@
 import { NodeEnvironment } from "../enum";
-import { IEnvironmentObjects } from "../typing";
+import { EnvironmentRecord } from "../typing";
 
-export const switchOnEnvironment = (environment: string, objects: IEnvironmentObjects): Record<string, any> => {
+export const switchOnEnvironment = (environment: string, objects: EnvironmentRecord): Record<string, any> => {
   switch (environment) {
     case NodeEnvironment.PRODUCTION:
       return objects.production;

@@ -1,9 +1,9 @@
-import { IEnvironmentObjects } from "../typing";
+import { EnvironmentRecord } from "../typing";
 import { NodeEnvironment } from "../enum";
 import { switchOnEnvironment } from "./switch-on-environment";
 
 describe("switchConfiguration", () => {
-  const objects: IEnvironmentObjects = {
+  const objects: EnvironmentRecord = {
     production: { production: true },
     staging: { staging: true },
     development: { development: true },

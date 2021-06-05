@@ -1,15 +1,15 @@
-import { mergeObjectsWithBias, switchOnEnvironment } from "../util"
-import { IConfigurationDataBase, IConfigurationOptions } from "../typing";
+import { mergeObjectsWithBias, switchOnEnvironment } from "../util";
+import { DefaultConfiguration, ConfigurationOptions } from "../typing";
 
-export abstract class ConfigurationBase<IConfigurationData extends IConfigurationDataBase> {
-  private productionConfig: IConfigurationDataBase;
-  private stagingConfig: IConfigurationDataBase;
-  private developmentConfig: IConfigurationDataBase;
+export abstract class ConfigurationBase<Configuration extends DefaultConfiguration> {
+  private readonly productionConfig: Configuration;
+  private readonly stagingConfig: Configuration;
+  private readonly developmentConfig: Configuration;
 
-  private environmentConfig: IConfigurationDataBase;
-  private testConfig: IConfigurationDataBase;
+  private readonly environmentConfig: Configuration;
+  private readonly testConfig: Configuration;
 
-  protected constructor(options: IConfigurationOptions<IConfigurationData>) {
+  protected constructor(options: ConfigurationOptions<Configuration>) {
     this.productionConfig = options.productionConfig;
     this.stagingConfig = options.stagingConfig;
     this.developmentConfig = options.developmentConfig;
@@ -18,8 +18,8 @@ export abstract class ConfigurationBase<IConfigurationData extends IConfiguratio
     this.testConfig = options.testConfig;
   }
 
-  public get(environment: string): IConfigurationData {
-    const data: unknown = mergeObjectsWithBias(
+  public get(environment: string): Configuration {
+    return mergeObjectsWithBias(
       this.environmentConfig,
       switchOnEnvironment(environment, {
         production: this.productionConfig,
@@ -27,8 +27,6 @@ export abstract class ConfigurationBase<IConfigurationData extends IConfiguratio
         development: this.developmentConfig,
         test: this.testConfig,
       }),
-    );
-
-    return data as IConfigurationData;
+    ) as Configuration;
   }
 }
